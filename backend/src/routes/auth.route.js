@@ -1,16 +1,13 @@
 import express from 'express';
-import { signup } from '../controllers/auth.controller.js';
+import { login, logout, signup } from '../controllers/auth.controller.js';
 
 const router = express.Router();
 
 router.post('/signup',signup)
 
-router.get('/login',(req,res)=>{
-    res.send("Login EndPoint")
-})
+router.post('/login',login)
 
-router.get('/logout',(req,res)=>{
-    res.send("Logout engpoint")
-})
+router.post('/logout',logout)
+//we use post in login and logout in order remove the caching
 
 export default router;

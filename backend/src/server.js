@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import authRoute from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';
+import  cookieParser from 'cookie-parser';
 import path from 'path';
 import { connect } from 'http2';
 import { connectDB } from './lib/db.js';
@@ -16,8 +17,13 @@ const __dirname = path.resolve();
 const PORT=ENV.PORT || 3003;
 
 app.use(express.json())
+app.use(cookieParser()) // adding cookie parser middleware to parse cookies in incoming requests
+
+
+
 app.use("/api/auth",authRoute)
 app.use("/api/messages",messageRoutes)
+
 
 //make ready for deployment
 if(ENV.NODE_ENV === "production"){

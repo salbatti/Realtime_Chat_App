@@ -16,6 +16,8 @@ const __dirname = path.resolve();
 
 const PORT=ENV.PORT || 3003;
 
+
+//payload to large cant go to express
 app.use(express.json())
 app.use(cookieParser()) // adding cookie parser middleware to parse cookies in incoming requests
 

@@ -7,6 +7,7 @@ import path from 'path';
 import { connect } from 'http2';
 import { connectDB } from './lib/db.js';
 import { ENV } from './lib/env.js';
+import cors from "cors";
 
 dotenv.config();
 const app = express();
@@ -19,6 +20,7 @@ const PORT=ENV.PORT || 3003;
 
 //payload to large cant go to express
 app.use(express.json())
+app.use(cors({origin:ENV.CLIENT_URL,credentials:true}))
 app.use(cookieParser()) // adding cookie parser middleware to parse cookies in incoming requests
 
 

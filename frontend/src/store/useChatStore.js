@@ -13,6 +13,7 @@ export const useChatStore = create((set, get) => ({
     isMessagesLoading: false,
     isSoundEnabled: JSON.parse(localStorage.getItem("isSoundEnabled")) === true,
 
+
     toggleSound: () => {
         localStorage.setItem("isSoundEnabled", !get().isSoundEnabled);
         set({ isSoundEnabled: !get().isSoundEnabled });
@@ -20,6 +21,7 @@ export const useChatStore = create((set, get) => ({
 
     setActiveTab: (tab) => set({ activeTab: tab }),
     setSelectedUser: (selectedUser) => set({ selectedUser }),
+
 
     getAllContacts:async()=>{
         set({isUsersLoading:true})
@@ -33,8 +35,9 @@ export const useChatStore = create((set, get) => ({
             set({isUsersLoading:false})
         }
     },
-    getMyChatPartner: async()=>{
-        set({isMessagesLoading:true})
+
+    getMyChatPartners: async()=>{
+        set({isMessagesLoading:true})//issue here
         try {
             const res =await axiosInstance.get("/messages/chats");
             set({chats:res.data})
@@ -45,9 +48,4 @@ export const useChatStore = create((set, get) => ({
             set({isMessagesLoading:false})
         }
     }
-
-
-
-
-
 }))

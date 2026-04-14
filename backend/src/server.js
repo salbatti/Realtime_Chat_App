@@ -18,8 +18,8 @@ const __dirname = path.resolve();
 const PORT=ENV.PORT || 3003;
 
 
-//payload to large cant go to express
-app.use(express.json())
+// payload too large cant go to express if we don't increase the limit
+app.use(express.json({ limit: "10mb" }));
 app.use(cors({origin:ENV.CLIENT_URL,credentials:true}))
 app.use(cookieParser()) // adding cookie parser middleware to parse cookies in incoming requests
 

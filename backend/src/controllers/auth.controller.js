@@ -114,11 +114,10 @@ export const updateProfile = async (req, res) => {
             { profilePic: uploadResponse.secure_url },
             { new: true }).select("-password");
 
-        res.status(200).json(updateUser); l
-
+        res.status(200).json(updateUser); 
     }
     catch (error) {
-        console.log("Error in update profile", error);
+        console.log("Error in backend error update profile", error);
         res.status(500).json({ message: "Internal Server Error" })
     }
 }

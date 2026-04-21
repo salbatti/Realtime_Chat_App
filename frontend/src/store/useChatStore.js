@@ -23,40 +23,29 @@ export const useChatStore = create((set, get) => ({
     setSelectedUser: (selectedUser) => set({ selectedUser }),
 
 
-    getAllContacts: async () => {
-        set({ isUsersLoading: true })
+    getAllContacts:async()=>{
+        set({isUsersLoading:true})
         try {
-            const res = await axiosInstance.get("/messages/contacts");
-            set({ allContacts: res.data })
+            const res=await axiosInstance.get("/messages/contacts");
+            set({allContacts:res.data})
         } catch (error) {
             toast.error(error.response.data.message);
         }
-        finally {
-            set({ isUsersLoading: false })
+        finally{
+            set({isUsersLoading:false})
         }
     },
 
-    getMyChatPartners: async () => {
-        set({ isUsersLoading: true })//issue here
+    getMyChatPartners: async()=>{
+        set({isMessagesLoading:true})//issue here
         try {
-            const res = await axiosInstance.get("/messages/chats");
-            set({ chats: res.data })
+            const res =await axiosInstance.get("/messages/chats");
+            set({chats:res.data})
         } catch (error) {
             toast.error(error.response.data.message);
         }
-        finally {
-            set({ isUsersLoading: false })
+        finally{
+            set({isMessagesLoading:false})
         }
-    },
-    getMessagesByUserId: async (userId) => {
-        set({ isMessagesLoading: true });
-        try {
-            const res = await axiosInstance.get(`/messages/${userId}`);
-            set({ messages: res.data });
-        } catch (error) {
-            toast.error(error.response?.data?.message || "Something went wrong");
-        } finally {
-            set({ isMessagesLoading: false });
-        }
-    },
+    }
 }))

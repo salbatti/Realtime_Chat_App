@@ -8,9 +8,9 @@ import { connect } from 'http2';
 import { connectDB } from './lib/db.js';
 import { ENV } from './lib/env.js';
 import cors from "cors";
+import { app, server } from './lib/socket.js';
 
 dotenv.config();
-const app = express();
 const __dirname = path.resolve();
 
 // console.log(process.env.PORT);
@@ -39,7 +39,7 @@ if(ENV.NODE_ENV === "production"){
 }
 
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`Server is runing on port ${PORT}`);
     connectDB()
 })

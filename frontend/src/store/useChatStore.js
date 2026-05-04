@@ -78,13 +78,40 @@ export const useChatStore = create((set, get) => ({
             isOptimistic: true, // flag to identify optimistic messages (optional)
         };
 
-       set({ messages: [...messages, optimisticMessage] });
+        set({ messages: [...messages, optimisticMessage] });
         try {
             const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData)
             set({ messages: messages.concat(res.data) })
         } catch (error) {
-              set({ messages: messages });
+            set({ messages: messages });
             toast.error(error.response.data.message || "Something went wrong");
         }
     }
+    ,
+    subscribeToMessage: () => {
+        const { selectedUser, isSoundEnabled } = get();
+        if (!selectedUser) return
+
+        const socket = useAuthStore.getState().socket;
+        socket.on("newMessage", (newMessage) => {
+
+            const isMessageSentFromSelectedUser = newMessage.senderId === selectedUser?._id;
+            if(!isMessageSentFromSelectedUser) return;
+            
+            const currentMessages = get().messages
+            set({ messages: [...currentMessages, newMessage] })
+
+            if (isSoundEnabled) {
+                const notificationSound = new Audio("/sounds/notification.mp3");
+                notificationSound.currentTime = 0; // reset to start
+                notificationSound.play().catch((e) => console.log("Audio play failed:", e));
+            }
+        })
+    },
+    unsubscribeToMessage: ()=>{
+        const socket = useAuthStore.getState().socket;
+        if (!socket) return;
+        socket.off("newMessage")
+    }
+
 }))

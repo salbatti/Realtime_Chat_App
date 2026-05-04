@@ -9,7 +9,7 @@ import  {Toaster} from "react-hot-toast"
 const App = () => {
   const {checkAuth, isCheckingAuth,authUser} =useAuthStore()
   
-  //small doubt
+
   useEffect(()=>{
     checkAuth()
   },[checkAuth])
